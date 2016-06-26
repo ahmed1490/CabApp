@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  DeviceEventEmitter
+  Keyboard
 } from 'react-native';
 
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
@@ -37,8 +37,8 @@ class PlacesCard extends React.Component {
 // 0.27.0 & 0.27.1
 // const Keyboard = require('Keyboard');
 // Keyboard.addListener('keyboardWillShow', func);
-    DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
-    DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
+    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
+    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
   }
 
   keyboardWillShow (e) {

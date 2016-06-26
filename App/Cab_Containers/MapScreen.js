@@ -17,7 +17,6 @@ import { bindActionCreators } from 'redux';
 import styles from './Styles/MapScreenStyle'
 import I18n from '../I18n/I18n.js'
 
-
 export default class MapScreen extends React.Component {
 
   static propTypes = {

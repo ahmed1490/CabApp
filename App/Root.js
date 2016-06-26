@@ -7,11 +7,12 @@ import Drawer from 'react-native-drawer'
 import DebugSettings from './Config/DebugSettings'
 import DrawerContent from './Components/DrawerContent'
 import './Config/PushConfig'
+import RequiresConnection from 'react-native-offline-mode'
 
 // Styles
 import styles, {drawerStyles} from './Containers/Styles/RootStyle'
 
-export default class Root extends React.Component {
+class Root extends React.Component {
   constructor (props) {
     super(props)
     this.handlePushRoute = this.handlePushRoute.bind(this)
@@ -69,10 +70,10 @@ export default class Root extends React.Component {
           >
             <Navigator
               ref={(ref) => { this.navigator = ref }}
-              initialRoute={Routes.PresentationScreen}
+              initialRoute={Routes.MapScreen}
               configureScene={Router.configureScene}
               renderScene={Router.renderScene}
-              navigationBar={NavigationBar.render()}
+              // navigationBar={NavigationBar.render()}
               style={styles.container}
             />
           </Drawer>
@@ -85,3 +86,5 @@ export default class Root extends React.Component {
     return this.renderApp()
   }
 }
+
+export default RequiresConnection(Root)

@@ -2,7 +2,7 @@ import React from 'react'
 import { AppRegistry } from 'react-native'
 import Root from './App/Root'
 import './App/Config/ReactotronConfig'
-import configureStore from './App/Store/Store'
+import configureStore from './App/Store/Cab_Store'
 
 // Handling store here to avoid hot-reloading issues
 const store = configureStore()

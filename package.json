@@ -36,6 +36,7 @@
     "react-native-i18n": "0.0.8",
     "react-native-location": "^0.14.3",
     "react-native-maps": "^0.6.0",
+    "react-native-offline-mode": "^0.1.1",
     "react-native-push-notification": "^1.1.0",
     "react-native-vector-icons": "^2.0.2",
     "react-redux": "^4.4.2",

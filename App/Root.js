@@ -23,7 +23,7 @@ export default class Root extends React.Component {
   }
 
   componentWillMount () {
-    console.log('native modules', NativeModules, JSON.stringify(NativeModules))
+    console.log('native modules', NativeModules)
     const { dispatch } = this.props.store
     dispatch(Actions.startup())
   }

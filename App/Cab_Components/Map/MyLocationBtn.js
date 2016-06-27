@@ -18,33 +18,17 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 class MyLocationBtn extends React.Component {
 
   static propTypes = {
-    setStart: PropTypes.func,
-    setMapRegion: PropTypes.func,
+    resetMapPosition: PropTypes.func
   }
 
   shouldComponentUpdate() {
     return false;
   }
 
-  _getCurrentLocation(){
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const coords = position.coords;
-        const location = {
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-        };
-        
-        this.props.setStart(location);
-      },
-      (error) => console.error(error)
-    );
-  }
-
   render() {
     return (
       <Button containerStyle={styles.locationIcon}
-        onPress={this._getCurrentLocation.bind(this)}>
+        onPress={this.props.resetMapPosition}>
         <Icon name="ios-navigate" size={18} color='#0092DA' style={{width:20, marginTop: 2}} />
       </Button>
     );

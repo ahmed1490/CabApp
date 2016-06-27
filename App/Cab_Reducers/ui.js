@@ -16,6 +16,7 @@ const initialState = {
 
     isOptionsVisible: false,
     visiblePlaceCard: undefined, //'start'/'end'
+    hasGeoPermission: true,
 
     cars: [
       {id: 1, latitude: 37.33260575262121, longitude: -122.0307375036871, duration: '3 mins'},
@@ -30,6 +31,7 @@ export default function setLocation(state = initialState, action) {
     case Types.SET_USER_POSITION:
       return {
         ...state,
+        hasGeoPermission: true,
         user_position: action.payload
       }
 
@@ -50,6 +52,12 @@ export default function setLocation(state = initialState, action) {
       return {
         ...state,
         visiblePlaceCard: action.payload
+      }
+
+    case Types.USER_POSITION_FAILED:
+      return {
+        ...state,
+        hasGeoPermission: false
       }
 
     default:

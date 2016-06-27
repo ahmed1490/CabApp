@@ -14,26 +14,26 @@ export default (api) => {
     return { latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta };
   }
 
-  function * getJourneyInfo(payload) {
-    if (!payload.placeData) {
-      const response = yield call(api.getReverseGeocode, payload.position);
-      console.log('getReverseGeocode', JSON.stringify(response.data))
-      payload.placeData = response.ok ? response.data : {};
+  function * getJourneyInfo(position, placeData) {
+    if (!placeData) {
+      const response = yield call(api.getReverseGeocode, position);
+      placeData = response.ok ? response.data : {};
     }
-    return payload;
+    return {position, placeData};
   }
 
-  function * setJourneyStart(action) {
-    yield delay(500);
+  function * setJourneyStart(action, isThrottled=true) {
+    isThrottled ? yield delay(500) : null;
+    const payload = action.payload;
     const [ positionPayload , mapRegionDelta] = yield [
-      call(getJourneyInfo, action.payload),
-      call(getMapRegionDelta, action.payload.latitudeDelta)
+      call(getJourneyInfo, payload.position, payload.placeData),
+      call(getMapRegionDelta, payload.latitudeDelta)
     ];
     yield put(Actions.setJourneyStart(positionPayload.position, positionPayload.placeData, mapRegionDelta));
   }
 
   function * setJourneyEnd(action) {
-    const positionPayload = yield call(getJourneyInfo, action.payload);
+    const positionPayload = yield call(getJourneyInfo, action.payload.position, action.payload.placeData);
     yield put(Actions.setJourneyEnd(positionPayload.position, positionPayload.placeData));
   }
 
@@ -45,6 +45,7 @@ export default (api) => {
   }
 
   return {
-    watcher
+    watcher,
+    setJourneyStart
   }
 }

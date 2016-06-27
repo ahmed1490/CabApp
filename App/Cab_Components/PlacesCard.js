@@ -33,12 +33,13 @@ class PlacesCard extends React.Component {
   }
 
   componentWillMount () {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
+  }
 
-// 0.27.0 & 0.27.1
-// const Keyboard = require('Keyboard');
-// Keyboard.addListener('keyboardWillShow', func);
-    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
-    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
   }
 
   keyboardWillShow (e) {

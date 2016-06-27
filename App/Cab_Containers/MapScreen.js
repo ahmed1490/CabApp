@@ -11,6 +11,7 @@ import MapBlock from '../Cab_Components/Map/MapBlock';
 import MyLocationBtn from '../Cab_Components/Map/MyLocationBtn';
 import ActionCard from '../Cab_Components/ActionCard/ActionCard';
 import PlacesCard from '../Cab_Components/PlacesCard';
+import GeoPermissionFailed from '../Cab_Components/Permissions/GeoPermissionFailed';
 
 import { bindActionCreators } from 'redux';
 
@@ -24,40 +25,46 @@ export default class MapScreen extends React.Component {
     dispatch: PropTypes.func
   }
 
+  _renderMapBlock() {
+      const { actions, ui, journey } = this.props;
+      return (
+        <View style={styles.container}>
+          <MapBlock
+            cars={ui.cars}
+            startPosition={journey.startPosition}
+            mapRegionDelta={ui.mapRegionDelta}
+
+            setStart={actions._setJourneyStart}
+          />
+
+          <MyLocationBtn
+            resetMapPosition={actions._resetMapPosition}
+          />
+
+          <ActionCard
+            isOptionsVisible={ui.isOptionsVisible}
+            start={journey.startInfo}
+            end={journey.endInfo}
+
+            setOptionsVisible={actions.setOptionsVisible}
+            setVisiblePlaceCard={actions.setVisiblePlaceCard}
+          />
+          <PlacesCard
+            visiblePlaceCard={ui.visiblePlaceCard}
+
+            setVisiblePlaceCard={actions.setVisiblePlaceCard}
+            setStart={actions._setJourneyStart}
+            setEnd={actions._setJourneyEnd}
+          />
+       </View>
+      );
+  }
+
   render () {
     const { actions, ui, journey } = this.props;
+    const returnHtml = ui.hasGeoPermission ? this._renderMapBlock() : <GeoPermissionFailed resetMapPosition={actions._resetMapPosition} />;
 
-    return (
-      <View style={styles.container}>
-        <MapBlock
-          cars={ui.cars}
-          startPosition={journey.startPosition}
-          mapRegionDelta={ui.mapRegionDelta}
-
-          setStart={actions._setJourneyStart}
-        />
-
-        <MyLocationBtn
-          setStart={actions._setJourneyStart}
-        />
-
-        <ActionCard
-          isOptionsVisible={ui.isOptionsVisible}
-          start={journey.startInfo}
-          end={journey.endInfo}
-
-          setOptionsVisible={actions.setOptionsVisible}
-          setVisiblePlaceCard={actions.setVisiblePlaceCard}
-        />
-        <PlacesCard
-          visiblePlaceCard={ui.visiblePlaceCard}
-
-          setVisiblePlaceCard={actions.setVisiblePlaceCard}
-          setStart={actions._setJourneyStart}
-          setEnd={actions._setJourneyEnd}
-        />
-      </View>
-    )
+    return returnHtml;
   }
 }
 

@@ -1,6 +1,7 @@
 package com.cabapp;
 
 import com.facebook.react.ReactActivity;
+import com.evollu.react.fcm.FIRMessagingPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.devfd.RNGeocoder.RNGeocoderPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -41,6 +42,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new FIRMessagingPackage(),
             new MapsPackage(),
             new RNGeocoderPackage(),
             new VectorIconsPackage(),
